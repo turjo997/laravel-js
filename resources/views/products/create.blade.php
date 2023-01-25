@@ -59,6 +59,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Preview -->
                 <div class="card shadow">
                     <div class="card-header text-uppercase">Preview</div>
                     <div class="card-body">

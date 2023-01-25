@@ -19,8 +19,6 @@ class ProductController extends Controller
      */
     public function index(Request $req)
     {
-        //$variants = Product::paginate(10);
-        // $variants = DB::all();
         $search = $req['search'] ?? "";
         $search1 = $req['price_from'] ?? "";
         $search2 = $req['price_to'] ?? "";
@@ -65,20 +63,11 @@ class ProductController extends Controller
 
     public function store(ProductRequest $req)
     {
-        // if ($req->title === null || $req->sku === null || $req->description == null) {
-        //     return redirect() - back();
-        // }
-
-
-
-
         $product = new Product;
         $product->title = $req->title;
         $product->sku = $req->sku;
         $product->description = $req->description;
         $product->save();
-
-
 
         $totalid = DB::table('products')->count();
         $totalid = $totalid + 1;
@@ -88,13 +77,9 @@ class ProductController extends Controller
         $image->product_id = $totalid;
         $image->file_path = $req->file;
         $image->save();
-
-
-
         // $product = new Product();
         // $product->fill($req->all());
         // $product->save();
-
 
         //return redirect()->back()->with('success', 'product Saved');
         return redirect()->back();
@@ -134,10 +119,18 @@ class ProductController extends Controller
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    // public function edit(Product $product)
+    // {
+    //     //  $variants = Variant::all();
+    //     return view('products.edit');
+    // }
+
+
+    public function edit($id)
     {
-        $variants = Variant::all();
-        return view('products.edit', compact('variants'));
+        $product = Product::findOrFail($id);
+        return view('products.edit', compact('product'));
+        //return view('products.edit');
     }
 
     /**
@@ -147,11 +140,15 @@ class ProductController extends Controller
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, $id)
     {
-        //
-    }
+        $product = Product::findOrFail($id);
+        $product->fill($request->all());
+        $product->save();
 
+        return redirect()->back();
+        //return redirect()->back()->with('success', 'Variant Updated');
+    }
     /**
      * Remove the specified resource from storage.
      *

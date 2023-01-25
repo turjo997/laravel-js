@@ -84,7 +84,7 @@
                         <td>{{ $variant->variant}}&nbsp;Price:{{ $variant->price}}
                             &nbsp;In Stock:{{ $variant->stock}}
                         </td>
-                        <td><button class="btn btn-success">Edit</button></td>
+                        <td><a href="{{ route('product.edit',$variant->id)}}" class="btn btn-success">Edit</a></td>
                     </tr>
                     @endforeach
                 </tbody>
